@@ -272,34 +272,37 @@ public class Juego extends Canvas implements Runnable {
 
 		final int nanoSegundosQueHayEnUnSegundo = 1000000000;
 
-		final byte actualizacionesAEfectuarEnCadaSegundo_APS = 60;
+		final byte actualizacionesAEfectuarEnCadaSegundoComoObjetivo_APS = 60;
 
-		final long tiempoATranscurrirEntreActualizaciones = nanoSegundosQueHayEnUnSegundo / actualizacionesAEfectuarEnCadaSegundo_APS;
+		final long tiempoATranscurrirEntreActualizaciones = nanoSegundosQueHayEnUnSegundo / actualizacionesAEfectuarEnCadaSegundoComoObjetivo_APS;
 
-		long referenciaTemporalFueraDelBucleWhile = System.nanoTime();
-		long referenciaParaElIndicador = System.nanoTime();
+		long referenciaTemporalDeActualizacionFueraDelBucleWhile = System.nanoTime();
+		
+		long referenciaTemporalParaElIndicador = System.nanoTime();
 
-		float tiempoTranscurridoEntreAsignacionesReferenciasTemporales;
+		float tiempoEstimadoQueHaTranscurridoEntreAsignacionesReferenciasTemporales;
 
-		float acumuladorNuevosRepartosTiempoCalculados_delta = 0;
+		float acumuladorTiempoTranscurridoRealmente_delta = 0;
 
 		while (juegoEstaEnFuncionamiento) {
 
 			final long referenciaAlInicioDelBucleWhile = System.nanoTime();
 
-			tiempoTranscurridoEntreAsignacionesReferenciasTemporales = referenciaAlInicioDelBucleWhile - referenciaTemporalFueraDelBucleWhile;
+			tiempoEstimadoQueHaTranscurridoEntreAsignacionesReferenciasTemporales = referenciaAlInicioDelBucleWhile - referenciaTemporalDeActualizacionFueraDelBucleWhile;
 
-			referenciaTemporalFueraDelBucleWhile = referenciaAlInicioDelBucleWhile;
+			referenciaTemporalDeActualizacionFueraDelBucleWhile = referenciaAlInicioDelBucleWhile;
 
-			float repartoTiempoTranscurrido = tiempoTranscurridoEntreAsignacionesReferenciasTemporales / tiempoATranscurrirEntreActualizaciones;
+			float tiempoTranscurridoRealmenteEntreAsignaciones = tiempoEstimadoQueHaTranscurridoEntreAsignacionesReferenciasTemporales / tiempoATranscurrirEntreActualizaciones;
 
-			acumuladorNuevosRepartosTiempoCalculados_delta = acumuladorNuevosRepartosTiempoCalculados_delta + repartoTiempoTranscurrido;
+			acumuladorTiempoTranscurridoRealmente_delta = acumuladorTiempoTranscurridoRealmente_delta + tiempoTranscurridoRealmenteEntreAsignaciones;
+			
+			final byte unSegundo = 1;
 
-			while (acumuladorNuevosRepartosTiempoCalculados_delta >= 1) {
+			while (acumuladorTiempoTranscurridoRealmente_delta >= unSegundo) {
 
 				actualizar();
 
-				acumuladorNuevosRepartosTiempoCalculados_delta = acumuladorNuevosRepartosTiempoCalculados_delta - 1;
+				acumuladorTiempoTranscurridoRealmente_delta = acumuladorTiempoTranscurridoRealmente_delta - 1;
 
 			}
 
@@ -307,19 +310,19 @@ public class Juego extends Canvas implements Runnable {
 
 			long referenciaPreSubtraccion = System.nanoTime();
 
-			long tiempoTranscurridoDesdeReferenciaPreSubtraccionHastaReferenciaParaElIndicador = referenciaPreSubtraccion - referenciaParaElIndicador;
+			long tiempoTranscurridoDesdeReferenciaPreSubtraccionHastaReferenciaParaElIndicador = referenciaPreSubtraccion - referenciaTemporalParaElIndicador;
 
 			if (tiempoTranscurridoDesdeReferenciaPreSubtraccionHastaReferenciaParaElIndicador > nanoSegundosQueHayEnUnSegundo) {
 
-				ventana.setTitle(NAME + " || Actualizaciones por segundo: " + aps + " || Dibujos por segundo: " + dps);
+				ventana.setTitle(NAME + " || Actualizaciones por segundo: " + acumulador_aps + " || Dibujos por segundo: " + acumulador_dps);
 
-				CONTADOR_APS = "APS: " + aps;
-				CONTADOR_FPS = "DPS: " + dps;
+				ACUMULADOR_APS = "APS: " + acumulador_aps;
+				ACUMULADOR_FPS = "DPS: " + acumulador_dps;
 				
-				aps = 0;
-				dps = 0;
+				acumulador_aps = 0;
+				acumulador_dps = 0;
 
-				referenciaParaElIndicador = System.nanoTime();
+				referenciaTemporalParaElIndicador = System.nanoTime();
 
 			}
 
