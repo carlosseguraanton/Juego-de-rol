@@ -26,11 +26,11 @@ public class Juego extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static String CONTADOR_APS = "";
-	private static String CONTADOR_FPS = "";
+	private static String ACUMULADOR_APS = "";
+	private static String ACUMULADOR_FPS = "";
 
-	private static int aps = 0;
-	private static int dps = 0;
+	private static int acumulador_aps = 0;
+	private static int acumulador_dps = 0;
 
 	private int x = 0;
 	private int y = 0;
@@ -162,7 +162,7 @@ public class Juego extends Canvas implements Runnable {
 
 		}
 		
-		aps = aps + 1;
+		acumulador_aps = acumulador_aps + 1;
 
 	}
 
@@ -234,11 +234,11 @@ public class Juego extends Canvas implements Runnable {
 		
 		g.setColor(red);
 		
-		g.drawString(CONTADOR_APS, 10, 20);
-		g.drawString(CONTADOR_FPS, 10, 35);
+		g.drawString(ACUMULADOR_APS, 10, 20);
+		g.drawString(ACUMULADOR_FPS, 10, 35);
 
-		g.drawString("aps: " + aps, 10, 80);
-		g.drawString("dps: " + dps, 10, 95);
+		g.drawString("aps: " + acumulador_aps, 10, 80);
+		g.drawString("dps: " + acumulador_dps, 10, 95);
 
 		g.drawString("X: " + x, 10, 50);
 		g.drawString("Y: " + y, 10, 65);
@@ -263,7 +263,7 @@ public class Juego extends Canvas implements Runnable {
 
 		bufferStrategy.show();
 
-		dps = dps + 1;
+		acumulador_dps = acumulador_dps + 1;
 
 	}
 
