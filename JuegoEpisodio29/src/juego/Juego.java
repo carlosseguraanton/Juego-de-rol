@@ -172,7 +172,9 @@ public class Juego extends Canvas implements Runnable {
 
 		if (bufferStrategy == null) {
 
-			createBufferStrategy(3);
+			final int numBuffers = 3;
+
+			createBufferStrategy(numBuffers);
 
 			return;
 
