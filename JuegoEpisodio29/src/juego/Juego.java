@@ -227,8 +227,16 @@ public class Juego extends Canvas implements Runnable {
 		System.arraycopy(pixelesCapturados, 0, pixelesCanvas, 0, pixelesCanvas.length);
 
 		Graphics g = bufferStrategy.getDrawGraphics();
+		
+		final int x = 0;
+		final int y = 0;
+		
+		final int width = getWidth();
+		final int height = getHeight();
+		
+		ImageObserver imageObserver = null;
 
-		g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(img, x, y, width, height, imageObserver);
 
 		Color red = Color.red;
 		
