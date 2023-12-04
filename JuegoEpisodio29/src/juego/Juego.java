@@ -89,7 +89,7 @@ public class Juego extends Canvas implements Runnable {
 		Dimension dimension = new Dimension(WIDTH, HEIGHT);
 
 		setPreferredSize(dimension);
-		
+
 		ventana = new JFrame(NAME);
 
 		int operation = JFrame.EXIT_ON_CLOSE;
@@ -97,26 +97,38 @@ public class Juego extends Canvas implements Runnable {
 		ventana.setDefaultCloseOperation(operation);
 
 		ventana.setResizable(false);
-		
-		Image img = icono.getImage();
 
-		ventana.setIconImage(img);
+		try {
 
-		BorderLayout newBorderLayout = new BorderLayout();
+			icono = new ImageIcon(URL);
 
-		ventana.setLayout(newBorderLayout);
+			Image img = icono.getImage();
 
-		String borderLayoutCenter = BorderLayout.CENTER;
+			ventana.setIconImage(img);
 
-		ventana.add(this, borderLayoutCenter);
+		} catch (Exception e) {
 
-		ventana.pack();
+			System.out.println("Se ha producido un error al cargar el icono del juego");
 
-		ventana.setLocationRelativeTo(null);
+		} finally {
 
-		ventana.setVisible(true);
+			BorderLayout newBorderLayout = new BorderLayout();
 
-		requestFocus();
+			ventana.setLayout(newBorderLayout);
+
+			String borderLayoutCenter = BorderLayout.CENTER;
+
+			ventana.add(this, borderLayoutCenter);
+
+			ventana.pack();
+
+			ventana.setLocationRelativeTo(null);
+
+			ventana.setVisible(true);
+
+			requestFocus();
+
+		}
 
 	}
 
