@@ -73,7 +73,7 @@ public class Juego extends Canvas implements Runnable {
 	
 	static URL URL = Juego.class.getResource(rutaIcono);
 
-	private static final ImageIcon icono = new ImageIcon(URL);
+	private static ImageIcon icono;
 
 	private Juego() {
 
