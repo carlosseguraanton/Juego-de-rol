@@ -6,14 +6,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
-import java.awt.image.ImageObserver;
 import java.awt.image.WritableRaster;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -74,7 +75,7 @@ public class Juego extends Canvas implements Runnable {
 	
 	static URL URL = Juego.class.getResource(rutaIcono);
 
-	private static ImageIcon icono;
+	private static ImageIcon icono = new ImageIcon(URL);
 
 	private Juego() {
 
@@ -185,9 +186,7 @@ public class Juego extends Canvas implements Runnable {
 
 		if (bufferStrategy == null) {
 
-			final int numBuffers = 3;
-
-			createBufferStrategy(numBuffers);
+			createBufferStrategy(3);
 
 			return;
 
@@ -242,16 +241,8 @@ public class Juego extends Canvas implements Runnable {
 		System.arraycopy(pixelesCapturados, 0, pixelesCanvas, 0, pixelesCanvas.length);
 
 		Graphics g = bufferStrategy.getDrawGraphics();
-		
-		final int x = 0;
-		final int y = 0;
-		
-		final int width = getWidth();
-		final int height = getHeight();
-		
-		ImageObserver imageObserver = null;
 
-		g.drawImage(img, x, y, width, height, imageObserver);
+		g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
 
 		Color red = Color.red;
 		
@@ -354,4 +345,3 @@ public class Juego extends Canvas implements Runnable {
 	}
 
 }
-
