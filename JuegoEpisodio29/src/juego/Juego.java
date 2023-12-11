@@ -11,6 +11,7 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferInt;
+import java.awt.image.ImageObserver;
 import java.awt.image.WritableRaster;
 import java.net.URL;
 
@@ -75,7 +76,7 @@ public class Juego extends Canvas implements Runnable {
 	
 	static URL URL = Juego.class.getResource(rutaIcono);
 
-	private static ImageIcon icono = new ImageIcon(URL);
+	private static ImageIcon icono;
 
 	private Juego() {
 
@@ -186,7 +187,9 @@ public class Juego extends Canvas implements Runnable {
 
 		if (bufferStrategy == null) {
 
-			createBufferStrategy(3);
+			final int numBuffers = 3;
+
+			createBufferStrategy(numBuffers);
 
 			return;
 
@@ -242,7 +245,15 @@ public class Juego extends Canvas implements Runnable {
 
 		Graphics g = bufferStrategy.getDrawGraphics();
 
-		g.drawImage(img, 0, 0, getWidth(), getHeight(), null);
+		final int x = 0;
+		final int y = 0;
+
+		final int width = getWidth();
+		final int height = getHeight();
+
+		ImageObserver imageObserver = null;
+
+		g.drawImage(img, x, y, width, height, imageObserver);
 
 		Color red = Color.red;
 		
